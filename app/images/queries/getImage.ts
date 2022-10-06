@@ -3,16 +3,16 @@ import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { z } from "zod"
 
-const GetChoice = z.object({
+const GetImage = z.object({
   // This accepts type of undefined, but is required at runtime
   id: z.string().optional().refine(Boolean, "Required"),
 })
 
-export default resolver.pipe(resolver.zod(GetChoice), resolver.authorize(), async ({ id }) => {
+export default resolver.pipe(resolver.zod(GetImage), resolver.authorize(), async ({ id }) => {
   // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-  const choice = await db.choice.findFirst({ where: { id } })
+  const image = await db.image.findFirst({ where: { id } })
 
-  if (!choice) throw new NotFoundError()
+  if (!image) throw new NotFoundError()
 
-  return choice
+  return image
 })

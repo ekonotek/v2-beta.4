@@ -31,7 +31,7 @@ export const QuestionsList = () => {
       <ul>
         {questions.map((question) => (
           <li key={question.id}>
-            <Link href={Routes.ShowQuestionPage({ questionId: question.id })}>
+            <Link href={Routes.ShowQuestionPage({ questionId: question.id.toString() })}>
               <a>{question.text}</a>
             </Link>
 

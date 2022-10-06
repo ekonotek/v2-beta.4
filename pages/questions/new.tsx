@@ -1,18 +1,15 @@
-import { Routes } from "@blitzjs/next";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useMutation } from "@blitzjs/rpc";
-import Layout from "app/core/layouts/Layout";
-import createQuestion from "app/questions/mutations/createQuestion";
-import {
-  QuestionForm,
-  FORM_ERROR,
-} from "app/questions/components/QuestionForm";
-import {CreateQuestion} from "app/questions/validations"
+import { Routes } from "@blitzjs/next"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useMutation } from "@blitzjs/rpc"
+import Layout from "app/core/layouts/Layout"
+import createQuestion from "app/questions/mutations/createQuestion"
+import { QuestionForm, FORM_ERROR } from "app/questions/components/QuestionForm"
+import { CreateQuestion } from "app/questions/validations"
 
 const NewQuestionPage = () => {
-  const router = useRouter();
-  const [createQuestionMutation] = useMutation(createQuestion);
+  const router = useRouter()
+  const [createQuestionMutation] = useMutation(createQuestion)
 
   return (
     <Layout title={"Create New Question"}>
@@ -24,16 +21,16 @@ const NewQuestionPage = () => {
         //  - Tip: extract mutation's schema into a shared `validations.ts` file and
         //         then import and use it here
         schema={CreateQuestion}
-        initialValues={{text: "", Choice: []}}
+        initialValues={{ text: "", Choice: [] }}
         onSubmit={async (values) => {
           try {
-            const question = await createQuestionMutation(values);
-            router.push(Routes.ShowQuestionPage({ questionId: question.id }));
+            const question = await createQuestionMutation(values)
+            router.push(Routes.ShowQuestionPage({ questionId: question.id.toString() }))
           } catch (error: any) {
-            console.error(error);
+            console.error(error)
             return {
               [FORM_ERROR]: error.toString(),
-            };
+            }
           }
         }}
       />
@@ -44,9 +41,9 @@ const NewQuestionPage = () => {
         </Link>
       </p>
     </Layout>
-  );
-};
+  )
+}
 
-NewQuestionPage.authenticate = true;
+NewQuestionPage.authenticate = true
 
-export default NewQuestionPage;
+export default NewQuestionPage

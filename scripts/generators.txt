@@ -1,0 +1,2 @@
+
+blitz generate all image createdBy:User nameFile:text caption:text description:text? type:ImageTypes

@@ -13,12 +13,12 @@ import updateChoice from "app/choices/mutations/updateChoice"
 
 export const Question = () => {
   const router = useRouter()
-  const questionId = useParam("questionId", "number")
+  const questionId = useParam("questionId", "string")
   const [deleteQuestionMutation] = useMutation(deleteQuestion)
   const [question, { refetch }] = useQuery(getQuestion, { id: questionId })
   const [updateChoiceMutation] = useMutation(updateChoice)
 
-  const handleVote = async (id: number) => {
+  const handleVote = async (id: string) => {
     try {
       await updateChoiceMutation({ id })
       refetch()

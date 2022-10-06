@@ -7,48 +7,48 @@ import { useQuery, useMutation } from "@blitzjs/rpc"
 import { useParam } from "@blitzjs/next"
 
 import Layout from "app/core/layouts/Layout"
-import getQuestion from "app/questions/queries/getQuestion"
-import updateQuestion from "app/questions/mutations/updateQuestion"
-import { QuestionForm, FORM_ERROR } from "app/questions/components/QuestionForm"
+import getImage from "app/images/queries/getImage"
+import updateImage from "app/images/mutations/updateImage"
+import { ImageForm, FORM_ERROR } from "app/images/components/ImageForm"
 
-export const EditQuestion = () => {
+export const EditImage = () => {
   const router = useRouter()
-  const questionId = useParam("questionId", "string")
-  const [question, { setQueryData }] = useQuery(
-    getQuestion,
-    { id: questionId },
+  const imageId = useParam("imageId", "string")
+  const [image, { setQueryData }] = useQuery(
+    getImage,
+    { id: imageId },
     {
       // This ensures the query never refreshes and overwrites the form data while the user is editing.
       staleTime: Infinity,
     }
   )
-  const [updateQuestionMutation] = useMutation(updateQuestion)
+  const [updateImageMutation] = useMutation(updateImage)
 
   return (
     <>
       <Head>
-        <title>Edit Question {question.id}</title>
+        <title>Edit Image {image.id}</title>
       </Head>
 
       <div>
-        <h1>Edit Question {question.id}</h1>
-        <pre>{JSON.stringify(question, null, 2)}</pre>
+        <h1>Edit Image {image.id}</h1>
+        <pre>{JSON.stringify(image, null, 2)}</pre>
 
-        <QuestionForm
-          submitText="Update Question"
+        <ImageForm
+          submitText="Update Image"
           // TODO use a zod schema for form validation
           //  - Tip: extract mutation's schema into a shared `validations.ts` file and
           //         then import and use it here
-          // schema={UpdateQuestion}
-          initialValues={question}
+          // schema={UpdateImage}
+          initialValues={image}
           onSubmit={async (values) => {
             try {
-              const updated = await updateQuestionMutation({
-                id: question.id,
+              const updated = await updateImageMutation({
+                id: image.id,
                 ...values,
               })
               await setQueryData(updated)
-              router.push(Routes.ShowQuestionPage({ questionId: updated.id }))
+              router.push(Routes.ShowImagePage({ imageId: updated.id }))
             } catch (error: any) {
               console.error(error)
               return {
@@ -62,23 +62,23 @@ export const EditQuestion = () => {
   )
 }
 
-const EditQuestionPage = () => {
+const EditImagePage = () => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
-        <EditQuestion />
+        <EditImage />
       </Suspense>
 
       <p>
-        <Link href={Routes.QuestionsPage()}>
-          <a>Questions</a>
+        <Link href={Routes.ImagesPage()}>
+          <a>Images</a>
         </Link>
       </p>
     </div>
   )
 }
 
-EditQuestionPage.authenticate = true
-EditQuestionPage.getLayout = (page) => <Layout>{page}</Layout>
+EditImagePage.authenticate = true
+EditImagePage.getLayout = (page) => <Layout>{page}</Layout>
 
-export default EditQuestionPage
+export default EditImagePage
