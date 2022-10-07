@@ -1,14 +1,14 @@
-import { Routes } from "@blitzjs/next";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useMutation } from "@blitzjs/rpc";
-import Layout from "app/core/layouts/Layout";
-import createImage from "app/images/mutations/createImage";
-import { ImageForm, FORM_ERROR } from "app/images/components/ImageForm";
+import { Routes } from "@blitzjs/next"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useMutation } from "@blitzjs/rpc"
+import Layout from "app/core/layouts/Layout"
+import createImage from "app/images/mutations/createImage"
+import { ImageForm, FORM_ERROR } from "app/images/components/ImageForm"
 
 const NewImagePage = () => {
-  const router = useRouter();
-  const [createImageMutation] = useMutation(createImage);
+  const router = useRouter()
+  const [createImageMutation] = useMutation(createImage)
 
   return (
     <Layout title={"Create New Image"}>
@@ -20,16 +20,16 @@ const NewImagePage = () => {
         //  - Tip: extract mutation's schema into a shared `validations.ts` file and
         //         then import and use it here
         // schema={CreateImage}
-        // initialValues={{}}
+        initialValues={{ name: "", nameFile: "" }}
         onSubmit={async (values) => {
           try {
-            const image = await createImageMutation(values);
-            router.push(Routes.ShowImagePage({ imageId: image.id }));
+            const image = await createImageMutation(values)
+            router.push(Routes.ShowImagePage({ imageId: image.id }))
           } catch (error: any) {
-            console.error(error);
+            console.error(error)
             return {
               [FORM_ERROR]: error.toString(),
-            };
+            }
           }
         }}
       />
@@ -40,9 +40,9 @@ const NewImagePage = () => {
         </Link>
       </p>
     </Layout>
-  );
-};
+  )
+}
 
-NewImagePage.authenticate = true;
+NewImagePage.authenticate = true
 
-export default NewImagePage;
+export default NewImagePage
