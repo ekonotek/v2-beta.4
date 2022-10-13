@@ -1,2 +1,22 @@
 
 blitz generate all image createdBy:User nameFile:text caption:text description:text? type:ImageTypes
+blitz generate all tag id:uuid createdBy:User name
+
+yarn add aws-sdk
+yarn add @date-io/date-fns
+
+import DateFnsAdapter from "@date-io/date-fns"
+
+const dateFns = new DateFnsAdapter()
+
+const initialDateFnsDate = dateFns.date("2018-10-28T11:44:00.000Z")
+
+const updatedDateFnsDate = dateFns.addDays(initialDateFnsDate, 2)
+
+dateFns.format(updatedDateFnsDate, "fullDateTime24h") // "2018, October 30th 11:44"
+
+const dates = [new Date(1995, 6, 2), new Date(1987, 1, 11), new Date(1989, 6, 10)]
+
+yarn add axios
+
+https://stackoverflow.com/questions/66845889/next-js-image-how-to-maintain-aspect-ratio-and-add-letterboxes-when-needed
