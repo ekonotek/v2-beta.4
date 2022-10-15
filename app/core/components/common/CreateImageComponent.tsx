@@ -8,6 +8,7 @@ import axios from "axios"
 import { useMutation } from "@blitzjs/rpc"
 import createImage from "app/images/mutations/createImage"
 import format from "date-fns/format"
+import FileUpload from "./FileUpload"
 const dateFns = new DateFnsAdapter()
 
 export const formatFilename = (filename: String, folder: String) => {
@@ -66,10 +67,34 @@ export function CreateImageComponent() {
     }
   }
 
+  const onImageChange = async (e) => {
+    alert(e.currentTarget.value)
+    // console.log("e.currentTarget.files: ")
+    // console.log(typeof e.currentTarget.files)
+    // console.log(e.currentTarget.files)
+    // console.log(e.currentTarget.files["length"])
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setPreviewImage(reader.result as string)
+    }
+    reader.readAsDataURL(e.currentTarget.files[0])
+
+    const completeFileName = e.currentTarget.value.split("\\").pop()
+    alert(completeFileName)
+    setelNameFile(completeFileName)
+    setelFileType(completeFileName.split(".").pop())
+    setelFile(e.currentTarget.files[0])
+
+    if (e.currentTarget.files && e.currentTarget.files["lenght"] > 0) {
+      // SelectedImage(e.tasrget.files(0))
+      alert(e.currentTarget.files[0])
+    }
+  }
+
   return (
     <React.Fragment>
       <h1>Create New Image</h1>
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <label
           htmlFor="image"
           className="p-4 border-dashed border-4 border-gray-600 block cursor-pointer"
@@ -120,10 +145,10 @@ export function CreateImageComponent() {
         {previewImage && (
           <Image src={previewImage} alt={"Preview"} layout={"fill"} objectFit={"contain"} />
         )}
-      </div>
-
+      </div> */}
+      <FileUpload onChange={onImageChange} previewImage={previewImage} />
       <ImageForm
-        submitText="Create Image"
+        submitText="Upload Image"
         // TODO use a zod schema for form validation
         //  - Tip: extract mutation's schema into a shared `validations.ts` file and
         //         then import and use it here
@@ -131,13 +156,24 @@ export function CreateImageComponent() {
         // initialValues={{ name: "", nameFile: "" }}
         onSubmit={async (values) => {
           try {
-            values.nameFile = elNameFile
+            const formattedNameFile = formatFilename(elNameFile, "images")
+            const response = await signS3Mutation({
+              fileName: formattedNameFile,
+              fileType: elFileType,
+            })
+
+            console.log("response...............")
+            console.log(response)
+            const { signedRequest, url } = response
+            uploadToS3(elFile, elFileType, signedRequest)
+            // setelNameFile(url)
+            values.nameFile = url
             values.caption = elNameFile.split(".")[0]
             values.description = elNameFile.split(".")[0]
             values.type = elFileType
             console.log("VALUES-----------")
             console.log(values)
-            // const image = await createImageMutation(values)
+            const image = await createImageMutation(values)
             // router.push(Routes.ShowImagePage({ imageId: image.id }))
           } catch (error: any) {
             console.error(error)
