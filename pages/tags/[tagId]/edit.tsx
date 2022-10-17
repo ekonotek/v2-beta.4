@@ -79,6 +79,10 @@ const EditTagPage = () => {
 }
 
 EditTagPage.authenticate = true
-EditTagPage.getLayout = (page) => <Layout>{page}</Layout>
+EditTagPage.getLayout = (page) => (
+  <Suspense fallback="Loading...">
+    <Layout>{page}</Layout>
+  </Suspense>
+)
 
 export default EditTagPage

@@ -47,7 +47,8 @@ export const EditQuestion = () => {
                 id: question.id,
                 ...values,
               })
-              await setQueryData(updated)
+              // await setQueryData(updated)
+              await setQueryData(question)
               router.push(Routes.ShowQuestionPage({ questionId: updated.id }))
             } catch (error: any) {
               console.error(error)
@@ -79,6 +80,9 @@ const EditQuestionPage = () => {
 }
 
 EditQuestionPage.authenticate = true
-EditQuestionPage.getLayout = (page) => <Layout>{page}</Layout>
-
+EditQuestionPage.getLayout = (page) => (
+  <Suspense fallback="Loading...">
+    <Layout>{page}</Layout>
+  </Suspense>
+)
 export default EditQuestionPage

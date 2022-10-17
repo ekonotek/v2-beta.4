@@ -62,23 +62,25 @@ export const ImagesList = () => {
 
 const ImagesPage = () => {
   return (
-    <Layout>
-      <Head>
-        <title>Images</title>
-      </Head>
+    <Suspense fallback="Loading...">
+      <Layout>
+        <Head>
+          <title>Images</title>
+        </Head>
 
-      <div>
-        <p>
-          <Link href={Routes.NewImagePage()}>
-            <a>Create Image</a>
-          </Link>
-        </p>
+        <div>
+          <p>
+            <Link href={Routes.NewImagePage()}>
+              <a>Create Image</a>
+            </Link>
+          </p>
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <ImagesList />
-        </Suspense>
-      </div>
-    </Layout>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ImagesList />
+          </Suspense>
+        </div>
+      </Layout>
+    </Suspense>
   )
 }
 

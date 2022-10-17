@@ -91,23 +91,25 @@ export const QuestionsList = () => {
 
 const QuestionsPage = () => {
   return (
-    <Layout>
-      <Head>
-        <title>Questions</title>
-      </Head>
+    <Suspense fallback="Loading...">
+      <Layout>
+        <Head>
+          <title>Questions</title>
+        </Head>
 
-      <div>
-        <p>
-          <Link href={Routes.NewQuestionPage()}>
-            <a>Create Question</a>
-          </Link>
-        </p>
+        <div>
+          <p>
+            <Link href={Routes.NewQuestionPage()}>
+              <a>Create Question</a>
+            </Link>
+          </p>
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <QuestionsList />
-        </Suspense>
-      </div>
-    </Layout>
+          <Suspense fallback={<div>Loading...</div>}>
+            <QuestionsList />
+          </Suspense>
+        </div>
+      </Layout>
+    </Suspense>
   )
 }
 

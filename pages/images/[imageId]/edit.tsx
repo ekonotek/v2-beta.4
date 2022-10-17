@@ -79,6 +79,10 @@ const EditImagePage = () => {
 }
 
 EditImagePage.authenticate = true
-EditImagePage.getLayout = (page) => <Layout>{page}</Layout>
+EditImagePage.getLayout = (page) => (
+  <Suspense fallback="Loading...">
+    <Layout>{page}</Layout>
+  </Suspense>
+)
 
 export default EditImagePage

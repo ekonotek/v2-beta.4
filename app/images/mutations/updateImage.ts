@@ -1,10 +1,14 @@
 import { resolver } from "@blitzjs/rpc"
-import db from "db"
+import db, { ImageTypes } from "db"
 import { z } from "zod"
 
 const UpdateImage = z.object({
   id: z.string(),
-  name: z.string(),
+  nameFile: z.string(),
+  caption: z.string(),
+  description: z.string(),
+  type: z.nativeEnum(ImageTypes),
+  projectId: z.number().optional(),
 })
 
 export default resolver.pipe(

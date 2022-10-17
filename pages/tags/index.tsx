@@ -1,25 +1,25 @@
-import { Suspense } from "react";
-import { Routes } from "@blitzjs/next";
-import Head from "next/head";
-import Link from "next/link";
-import { usePaginatedQuery } from "@blitzjs/rpc";
-import { useRouter } from "next/router";
-import Layout from "app/core/layouts/Layout";
-import getTags from "app/tags/queries/getTags";
+import { Suspense } from "react"
+import { Routes } from "@blitzjs/next"
+import Head from "next/head"
+import Link from "next/link"
+import { usePaginatedQuery } from "@blitzjs/rpc"
+import { useRouter } from "next/router"
+import Layout from "app/core/layouts/Layout"
+import getTags from "app/tags/queries/getTags"
 
-const ITEMS_PER_PAGE = 100;
+const ITEMS_PER_PAGE = 100
 
 export const TagsList = () => {
-  const router = useRouter();
-  const page = Number(router.query.page) || 0;
+  const router = useRouter()
+  const page = Number(router.query.page) || 0
   const [{ tags, hasMore }] = usePaginatedQuery(getTags, {
     orderBy: { id: "asc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
-  });
+  })
 
-  const goToPreviousPage = () => router.push({ query: { page: page - 1 } });
-  const goToNextPage = () => router.push({ query: { page: page + 1 } });
+  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
+  const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
   return (
     <div>
@@ -40,29 +40,31 @@ export const TagsList = () => {
         Next
       </button>
     </div>
-  );
-};
+  )
+}
 
 const TagsPage = () => {
   return (
-    <Layout>
-      <Head>
-        <title>Tags</title>
-      </Head>
+    <Suspense fallback="Loading...">
+      <Layout>
+        <Head>
+          <title>Tags</title>
+        </Head>
 
-      <div>
-        <p>
-          <Link href={Routes.NewTagPage()}>
-            <a>Create Tag</a>
-          </Link>
-        </p>
+        <div>
+          <p>
+            <Link href={Routes.NewTagPage()}>
+              <a>Create Tag</a>
+            </Link>
+          </p>
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <TagsList />
-        </Suspense>
-      </div>
-    </Layout>
-  );
-};
+          <Suspense fallback={<div>Loading...</div>}>
+            <TagsList />
+          </Suspense>
+        </div>
+      </Layout>
+    </Suspense>
+  )
+}
 
-export default TagsPage;
+export default TagsPage

@@ -7,6 +7,7 @@ import { BlitzPage, Routes } from "@blitzjs/next"
 import { useRouter } from "next/router"
 import { useMutation } from "@blitzjs/rpc"
 import Link from "next/link"
+import { Suspense } from "react"
 
 const ResetPasswordPage: BlitzPage = () => {
   const router = useRouter()
@@ -27,7 +28,11 @@ const ResetPasswordPage: BlitzPage = () => {
         <Form
           submitText="Reset Password"
           schema={ResetPassword}
-          initialValues={{ password: "", passwordConfirmation: "", token: router.query.token as string }}
+          initialValues={{
+            password: "",
+            passwordConfirmation: "",
+            token: router.query.token as string,
+          }}
           onSubmit={async (values) => {
             try {
               await resetPasswordMutation(values)
@@ -57,6 +62,9 @@ const ResetPasswordPage: BlitzPage = () => {
 }
 
 ResetPasswordPage.redirectAuthenticatedTo = "/"
-ResetPasswordPage.getLayout = (page) => <Layout title="Reset Your Password">{page}</Layout>
-
+ResetPasswordPage.getLayout = (page) => (
+  <Suspense fallback="Loading...">
+    <Layout title="Reset Your Password">{page}</Layout>
+  </Suspense>
+)
 export default ResetPasswordPage

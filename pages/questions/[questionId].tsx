@@ -83,6 +83,10 @@ const ShowQuestionPage = () => {
 }
 
 ShowQuestionPage.authenticate = true
-ShowQuestionPage.getLayout = (page) => <Layout>{page}</Layout>
+ShowQuestionPage.getLayout = (page) => (
+  <Suspense fallback="Loading...">
+    <Layout>{page}</Layout>
+  </Suspense>
+)
 
 export default ShowQuestionPage

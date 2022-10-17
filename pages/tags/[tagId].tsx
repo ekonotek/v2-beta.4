@@ -64,6 +64,10 @@ const ShowTagPage = () => {
 }
 
 ShowTagPage.authenticate = true
-ShowTagPage.getLayout = (page) => <Layout>{page}</Layout>
+ShowTagPage.getLayout = (page) => (
+  <Suspense fallback="Loading...">
+    <Layout>{page}</Layout>
+  </Suspense>
+)
 
 export default ShowTagPage

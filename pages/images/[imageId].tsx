@@ -64,6 +64,10 @@ const ShowImagePage = () => {
 }
 
 ShowImagePage.authenticate = true
-ShowImagePage.getLayout = (page) => <Layout>{page}</Layout>
+ShowImagePage.getLayout = (page) => (
+  <Suspense fallback="Loading...">
+    <Layout>{page}</Layout>
+  </Suspense>
+)
 
 export default ShowImagePage
