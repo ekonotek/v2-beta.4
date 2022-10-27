@@ -3,7 +3,8 @@ import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
-import { Link, Routes } from "blitz"
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 import { Typography } from "@mui/material"
 
 export default function ImageAvatars({ user }) {
@@ -31,16 +32,17 @@ export default function ImageAvatars({ user }) {
         onClose={handleClose}
       >
         <div style={{ margin: "5px" }}>
-          {user && <Typography variant="body1">{`${user.firstName} ${user.lastName}`}</Typography>}
+          {/* {user && <Typography variant="body1">{`${user.firstName} ${user.lastName}`}</Typography>} */}
+          {user && <Typography variant="body1">{`${user.name}`}</Typography>}
         </div>
-        {user?.Artist && (
+        {/* {user?.Artist && (
           <Link href={Routes.MyArtistProfile({ artistId: user.Artist.id })}>
             <MenuItem onClick={handleClose}>My Profile</MenuItem>
           </Link>
-        )}
-        <Link href={Routes.myAccount({ userId: user?.id })}>
+        )} */}
+        {/* <Link href={Routes.myAccount({ userId: user?.id })}>
           <MenuItem onClick={handleClose}>MyAccount</MenuItem>
-        </Link>
+        </Link> */}
       </Menu>
     </>
   )

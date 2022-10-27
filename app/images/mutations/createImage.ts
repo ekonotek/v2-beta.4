@@ -15,7 +15,11 @@ export default resolver.pipe(
         caption: input.caption,
         description: input.description,
         type: input.type,
-        // projectId: input.projectId,
+        organization: {
+          connect: {
+            id: ctx.session.orgId,
+          },
+        },
         createdBy: {
           connect: {
             id: currentUser?.id,

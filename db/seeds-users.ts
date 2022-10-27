@@ -90,7 +90,7 @@ const seed = async () => {
         const hashedPassword = await SecurePassword.hash(user?.password.trim())
         const luser = await db.user.create({
           data: {
-            name: user.firstName + user.lastName,
+            name: user.firstName + " " + user.lastName,
             email: user?.email.toLowerCase().trim(),
             hashedPassword,
             role: "CUSTOMER",
