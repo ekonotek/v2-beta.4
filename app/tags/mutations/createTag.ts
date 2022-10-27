@@ -9,6 +9,12 @@ export default resolver.pipe(resolver.zod(CreateTag), resolver.authorize(), asyn
   const tag = await db.tag.create({
     data: {
       name: input.name,
+      // organizationId: ctx.session.orgId,
+      organization: {
+        connect: {
+          id: ctx.session.orgId,
+        },
+      },
       createdBy: {
         connect: { id: currentUser?.id },
       },

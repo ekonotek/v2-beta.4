@@ -3,7 +3,6 @@ import db from "db"
 import { z } from "zod"
 
 const UpdateChoice = z.object({
-  // id: z.string(),
   id: z.string(),
 })
 

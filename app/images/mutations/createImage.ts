@@ -1,16 +1,7 @@
 import { resolver } from "@blitzjs/rpc"
 import getCurrentUser from "app/users/queries/getCurrentUser"
 import db, { ImageTypes } from "db"
-import { z } from "zod"
-
-const CreateImage = z.object({
-  nameFile: z.string(),
-  caption: z.string(),
-  description: z.string(),
-  type: z.nativeEnum(ImageTypes),
-  projectId: z.number().optional(),
-  userId: z.number().optional(),
-})
+import { CreateImage } from "../validations"
 
 export default resolver.pipe(
   resolver.zod(CreateImage),

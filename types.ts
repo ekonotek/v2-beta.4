@@ -12,7 +12,7 @@ declare module "@blitzjs/auth" {
 
       roles: Array<Role>
 
-      orgId?: Organization["id"]
+      orgId: Organization["id"]
     }
   }
 }

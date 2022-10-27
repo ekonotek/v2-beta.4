@@ -40,13 +40,13 @@ function MyApp({ Component, pageProps, emotionCache = clientSideEmotionCache }: 
   const getLayout = Component.getLayout || ((page) => page)
   return (
     <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
+      {/* <ThemeProvider theme={lightTheme}> */}
+      <CssBaseline />
 
-        <ErrorBoundary FallbackComponent={RootErrorFallback}>
-          {getLayout(<Component {...pageProps} />)}
-        </ErrorBoundary>
-      </ThemeProvider>
+      <ErrorBoundary FallbackComponent={RootErrorFallback}>
+        {getLayout(<Component {...pageProps} />)}
+      </ErrorBoundary>
+      {/* </ThemeProvider> */}
     </CacheProvider>
   )
 }

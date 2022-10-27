@@ -23,34 +23,39 @@ export function Form<S extends z.ZodType<any, any>>({
   onSubmit,
   ...props
 }: FormProps<S>) {
+  console.log("schema--------")
+  console.log(schema)
   return (
     <FinalForm
       initialValues={initialValues}
       validate={validateZodSchema(schema)}
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, submitError }) => (
-        <form onSubmit={handleSubmit} className="form" {...props}>
-          {/* Form fields supplied as children are rendered here */}
-          {children}
+        <>
+          {/* <pre>{JSON.stringify(props, null, 2)}</pre>; */}
+          <form onSubmit={handleSubmit} className="form" {...props}>
+            {/* Form fields supplied as children are rendered here */}
+            {children}
 
-          {submitError && (
-            <div role="alert" style={{ color: "red" }}>
-              {submitError}
-            </div>
-          )}
+            {submitError && (
+              <div role="alert" style={{ color: "red" }}>
+                {submitError}
+              </div>
+            )}
 
-          {submitText && (
-            <button type="submit" disabled={submitting}>
-              {submitText}
-            </button>
-          )}
+            {submitText && (
+              <button type="submit" disabled={submitting}>
+                {submitText}
+              </button>
+            )}
 
-          {/* <style global jsx>{`
+            {/* <style global jsx>{`
             .form > * + * {
               margin-top: 1rem;
             }
           `}</style> */}
-        </form>
+          </form>
+        </>
       )}
     />
   )

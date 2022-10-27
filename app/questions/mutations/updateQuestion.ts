@@ -5,7 +5,7 @@ import { z } from "zod"
 const UpdateQuestion = z.object({
   id: z.string(),
   text: z.string(),
-  choices: z.array(z.object({ id: z.string().optional(), text: z.string() })),
+  Choice: z.array(z.object({ id: z.string().optional(), text: z.string() })),
 })
 
 export default resolver.pipe(
@@ -13,8 +13,23 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ id, ...data }) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const question = await db.question.update({ where: { id }, data })
-
+    // const question = await db.question.update({ where: { id }, data })
+    const question = await db.question.update({
+      where: { id },
+      data: {
+        ...data,
+        Choice: {
+          upsert: data.Choice.map((choice) => ({
+            where: { id: choice.id },
+            create: { text: choice.text },
+            update: { text: choice.text },
+          })),
+        },
+      },
+      include: {
+        Choice: true,
+      },
+    })
     return question
   }
 )

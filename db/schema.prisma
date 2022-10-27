@@ -26,6 +26,9 @@ model Organization {
   name String
 
   membership Membership[]
+  Tag        Tag[]
+  Question   Question[]
+  Image      Image[]
 }
 
 model Membership {
@@ -70,6 +73,7 @@ model User {
   imagesCreated  Image[]
   Tag            Tag[]
   memberships    Membership[]
+  Question       Question[]
 }
 
 model Session {
@@ -112,11 +116,15 @@ model Token {
 // }
 
 model Question {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  text      String
-  Choice    Choice[]
+  id             String       @id @default(uuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  text           String
+  Choice         Choice[]
+  createdBy      User         @relation(fields: [userId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  userId         String
 }
 
 model Choice {
@@ -130,22 +138,26 @@ model Choice {
 }
 
 model Image {
-  id          String     @id @default(uuid())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  createdBy   User       @relation(fields: [userId], references: [id])
-  nameFile    String
-  caption     String
-  description String?
-  type        ImageTypes
-  userId      String
+  id             String       @id @default(uuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  createdBy      User         @relation(fields: [userId], references: [id])
+  nameFile       String
+  caption        String
+  description    String?
+  type           ImageTypes
+  userId         String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
 }
 
 model Tag {
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  id        String   @id @default(uuid())
-  createdBy User     @relation(fields: [userId], references: [id])
-  name      String
-  userId    String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  id             String       @id @default(uuid())
+  createdBy      User         @relation(fields: [userId], references: [id])
+  name           String
+  userId         String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
 }

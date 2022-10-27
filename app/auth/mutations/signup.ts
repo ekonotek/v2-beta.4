@@ -34,7 +34,7 @@ export default resolver.pipe(
       userId: user.id,
       // roles: [user.role as unknown as GRole, user.memberships[0]?.role as unknown as MRole],
       roles: [user.role, user.memberships[0]?.role],
-      orgId: user.memberships[0]?.organizationId,
+      orgId: user.memberships[0]?.organizationId || "",
     })
 
     return user

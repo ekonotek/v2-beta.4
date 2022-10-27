@@ -20,3 +20,5 @@ const dates = [new Date(1995, 6, 2), new Date(1987, 1, 11), new Date(1989, 6, 10
 yarn add axios
 
 https://stackoverflow.com/questions/66845889/next-js-image-how-to-maintain-aspect-ratio-and-add-letterboxes-when-needed
+
+https://react.i18next.com/
